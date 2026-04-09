@@ -1,0 +1,188 @@
+﻿@model System.Data.DataRow
+@{
+    ViewBag.Title = "GetEmployeeById";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetEmployeeById</h2>
+
+<div class="container-fluid">
+    <div class="row py-2 ">
+        <div class="col-sm-10 mx-auto">
+            <p class="text-center fs-3"> Add <b class="text-danger">Employee</b></p>
+            <div class="row py-3">
+                <div class="col-sm-4">
+                    <img src="~/Content/images/employeeimage.jpg" class="img-fluid" />
+                </div>
+                <div class="col-sm-8">
+                    <form method="post">
+                        <div class="row">
+                            <!--Input Start-->
+                            <!-- Employee ID-->
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingPassword" placeholder="EmployeeId" readonly name="EmployeeIdAttribute" value="@Model["EmployeeId"]">
+                                    <label for="floatingPassword">Enter Employee-Id</label>
+                                </div>
+                            </div>
+                            <!--Input End-->
+                            <!--Input Start-->
+                            <!--Employee Name Start-->
+                            <h3 class="fw-light">Personal Details</h3>
+                            <div class="col-sm-12">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingPassword" placeholder="FullName" name="EmployeeNameAttribute" value="@Model["EmployeeName"]">
+                                    <label for="floatingPassword">Enter Employee Full Name</label>
+                                </div>
+                            </div>
+                            <!--Employee Name End-->
+                            <!--Input End-->
+                            <!--Gender Start-->
+                            <div class="col-sm-6">
+                                <span class="fw-medium">Gender</span><br />
+                                
+                                <input class="form-check-input" type="radio" name="EmployeeGenderAttribute" id="radioDefault1" value="Male" >
+                                <span class="form-check-label" for="radioDefault1">
+                                    Male
+                                </span>
+                                
+                                <input class="form-check-input" type="radio" name="EmployeeGenderAttribute" id="radioDefault2" value="Female">
+                                <span class="form-check-label" for="radioDefault2">
+                                    Female
+                                </span>
+                                
+                            </div>
+                            <!--Gender End-->
+                            <!--Input Start-->
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" id="floatingPassword" placeholder="DateofBirth" name="EmployeeDOBAttribute" value="@Model["EmployeeDOB"]">
+                                    <label for="floatingPassword">Select Employee Date of Birth</label>
+                                </div>
+                            </div>
+                            <!--Input End-->
+                            <!--Input Start-->
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingPassword" placeholder="ContactNumber" name="EmployeeContactNumberAttribute" value="@Model["EmployeeContactNumber"]">
+                                    <label for="floatingPassword">Enter Employee Contact Number</label>
+                                </div>
+                            </div>
+                            <!--Input End-->
+                            <!--Input Start-->
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="floatingPassword" placeholder="Email" name="EmployeePersonalEmailAttribute" value="@Model["EmployeePersonalEmail"]">
+                                    <label for="floatingPassword">Enter Personal Email Id</label>
+                                </div>
+                            </div>
+                            <!--Input End-->
+                            <!--Input Start-->
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="floatingPassword" placeholder="Email" name="EmployeeOfficialEmailAttribute" value="@Model["EmployeeOfficialEmail"]">
+                                    <label for="floatingPassword">Enter Official Email Id</label>
+                                </div>
+                            </div>
+                            <!--Input End-->
+                            <!--Input Start-->
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingPassword" placeholder="Aadhar" name="EmployeeAadharNumberAttribute" value="@Model["EmployeeAadharNumber"]">
+                                    <label for="floatingPassword">Enter Employee Aadhar Number</label>
+                                </div>
+                            </div>
+                            <!--Input End-->
+                            <!-- Text Area Start-->
+                            <div class="col-sm-12">
+                                <div class="mb-3">
+                                    @*<label for="exampleFormControlTextarea1" class="form-label">Address</label>*@
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="EmployeeAddressAttribute" placeholder="Address">@Model["EmployeeAddress"]</textarea>
+                                </div>
+                            </div>
+
+                            <!-- Text Area End-->
+
+                            <h3 class="fw-lighter">Job Details</h3>
+                            <!--Select Start-->
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="EmployeeRoleAttribute" >
+                                        <option selected>-- Select Role --</option>
+                                        <option value="1">Admin</option>
+                                        <option value="2">Employee</option>
+                                        
+                                    </select>
+                                    <label for="floatingSelect">Select Role</label>
+                                </div>
+                            </div>
+                            <!--Select End-->
+                            <!--Input Start-->
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingPassword" placeholder="Designation" name="EmployeeDesignationAttribute" value="@Model["EmployeeDesignation"]">
+                                    <label for="floatingPassword">Enter Employee Designation</label>
+                                </div>
+                            </div>
+                            <!--Input End-->
+                            <!--Input Start-->
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    <input type="date" class="form-control" id="floatingPassword" placeholder="DateOfJoining" name="EmployeeDOJAttribute" value="@Model["EmployeeDOJ"]">
+                                    <label for="floatingPassword">Select Employee Date of Joining</label>
+                                </div>
+                            </div>
+                            <!--Input End-->
+
+                            <h3 class="fw-lighter">Account Details</h3>
+                            <!--Input Start-->
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingPassword"  name="EmployeeBankNameAttribute" value="@Model["EmployeeBankName"]">
+                                    <label for="floatingPassword">Bank Name</label>
+                                </div>
+                            </div>
+                            <!--Input End-->
+                            <!--Input Start-->
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingPassword"  name="EmployeeAccountNumberAttribute" value="@Model["EmployeeAccountNumber"]">
+                                    <label for="floatingPassword">Bank Account Number</label>
+                                </div>
+                            </div>
+                            <!--Input End-->
+                            <!--Input Start-->
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingPassword"  name="EmployeePANAttribute" value="@Model["EmployeePAN"]">
+                                    <label for="floatingPassword">PAN Number</label>
+                                </div>
+                            </div>
+                            <!--Input End-->
+                            <!--Input Start-->
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingPassword"  name="EmployeeIFSCcodeAttribute" value="@Model["EmployeeIFSCcode"]">
+                                    <label for="floatingPassword">IFSC Code</label>
+                                </div>
+                            </div>
+                            <!--Input End-->
+                            <!--Input Start-->
+                            <div class="col-sm-12">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control" id="floatingPassword" name="EmployeeSalaryAttribute" value="@Model["EmployeeSalary"]">
+                                    <label for="floatingPassword">Salary (per month)</label>
+                                </div>
+                            </div>
+                            <!--Input End-->
+                            <div class="col-sm-6">
+                                <input type="submit" class="form-control bg-success text-light" value="Add Employee" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

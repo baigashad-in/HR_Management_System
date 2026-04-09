@@ -1,0 +1,72 @@
+﻿@*@model System.Data.DataSet*@
+@{
+    ViewBag.Title = "MyTask";
+    Layout = "~/Views/Shared/_EmployeeLayoutPage.cshtml";
+}
+
+<h2>My Task</h2>
+
+<div class="container-fluid">
+    <p class="text-center fs-3 mt-3">Today's <b class="textcolor2">Task</b></p>
+    <hr class="w-25 mx-auto" />
+
+    <div class="container">
+        <div class="row">
+            @{
+                foreach (System.Data.DataRow item in ViewBag.TaskData.Tables[0].Rows)
+                {
+                    <div class="col-sm-3">
+                        <div class="card text-bg-light mb-3">
+                            <div class="card-header">
+                                <div style="float:left">1. <small>Added On : @item["TaskAddedOn"]</small></div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">@item["TaskSubject"]</h5>
+                                <p class="card-text">@item["TaskDescription"]</p>
+                                <p class="card-text"><small class="text-body-secondary">Priority : @item["TaskPriority"]</small></p>
+                                <figcaption class="blockquote-footer">
+                                    Due Date : <cite title="Source Title">@item["TaskDueDate"]</cite>
+                                </figcaption>
+                                <span class="badge text-bg-warning">Attachment : @item["TaskAttachment"]<i class="fa fa-download"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+
+        </div>
+    </div>
+
+
+    <p class="text-center fs-3 mt-3">Task <b class="textcolor2">History</b></p>
+    <hr class="w-25 mx-auto" />
+    <div class="container">
+        <div class="row">
+            @{
+                foreach (System.Data.DataRow item in ViewBag.TaskData.Tables[1].Rows)
+                {
+                    <div class="col-sm-3">
+                        <div class="card text-bg-light mb-3">
+                            <div class="card-header">
+                                <div style="float:left">1. <small>Added On : @item["TaskAddedOn"]</small></div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">@item["TaskSubject"]</h5>
+                                <p class="card-text">@item["TaskDescription"]</p>
+                                <p class="card-text"><small class="text-body-secondary">Priority : @item["TaskPriority"]</small></p>
+                                <figcaption class="blockquote-footer">
+                                    Due Date : <cite title="Source Title">@item["TaskDueDate"]</cite>
+                                </figcaption>
+                                <span class="badge text-bg-warning">Attachment : @item["TaskAttachment"]<i class="fa fa-download"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+
+        </div>
+    </div>
+</div>
+

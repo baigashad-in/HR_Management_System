@@ -1,0 +1,55 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "LeaveMgnmt";
+    Layout = "~/Views/Shared/_EmployeeLayoutPage.cshtml";
+}
+
+<h2>Leave Management</h2>
+
+<div class="container-fluid overflow-auto">
+    <!-- overflow-auto is used to make header footer constant during horzontal scrolling-->
+    <div class="row">
+        <div class="col-sm-6">
+            <table class="table" id="mytable">
+                <thead class="table table-bordered table-danger table-hover table-responsive">
+                    <tr>
+                        <th>Sr</th>
+                        <th>Leave_Subject</th>
+                        <th>Leave_Details</th>
+                        <th>From_Date</th>
+                        <th>To_Date</th>
+                        <th>Total_Days</th>
+                        <th>Added_On</th>
+                        <th>Leave_Status</th>
+                        <th>Admin Status</th>
+                        <th>Comment By Admin</th>
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+                        foreach (System.Data.DataRow item in Model.Rows)
+                        {
+                            <tr>
+                                <td>@item["Sr"]</td>
+                                <td>@item["Leave_Subject"]</td>
+                                <td>@item["Leave_Details"]</td>
+                                <td>@item["From_Date"]</td>
+                                <td>@item["To_Date"]</td>
+                                <td>@item["Total_Days"]</td>
+                                <td>@item["Added_On"]</td>
+                                <td class="fw-bold">@item["Leave_Status"]</td>
+                                <td>@item["Status_via_Admin"]</td>
+                                <td>@item["Status_Comment"]</td>
+                                @*<td>@item["EmployeeStatus"]</td>*@
+                                <td><a class="btn btn-primary" href="/Home/GetLeaveById?OldLeaveId=@item["Sr"]">Edit</a> | <a class="btn btn-danger" href="/Home/DeleteLeaveById?LeaveId=@item["Sr"]">Delete</a></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

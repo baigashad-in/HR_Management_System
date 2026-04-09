@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="~/Content/jQuery/jquery-3.7.1.js"></script>
+    <link href="~/Content/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/all.min.css" rel="stylesheet" />
+    <link href="~/Content/jQuery_dataTable/datatables.min.css" rel="stylesheet" />
+    
+    <script src="~/Content/jQuery_dataTable/datatables.min.js"></script>
+    <style>
+        .uheader {
+            min-height: 40px;
+            background: lightyellow;
+        }
+
+        .ic {
+            font-size: 20px;
+            line-height: 40px;
+        }
+
+        .header {
+            min-height: 50px;
+        }
+
+        .bg-mycolor {
+            /*            background: #9E9E9E;*/
+            background: #6f42c1;
+        }
+
+        #menu ul li a {
+            text-decoration: none;
+            font-size: 16px;
+            color: white;
+            padding-left: 30px;
+        }
+
+        .ufooter {
+            height: 50px;
+            background: black;
+        }
+
+        .footertext {
+            line-height: 50px;
+        }
+
+            .footertext a {
+                text-decoration: none;
+                color: #9E9E9E;
+            }
+
+        .login {
+            margin: 100px 0px;
+            border-radius: 20px;
+            background: white;
+        }
+
+        .textcolor1 {
+            color: #6610f2;
+        }
+
+        .textcolor2 {
+            color: #6f42c1;
+        }
+
+        .mycolor1 {
+            background: #6f42c1;
+            color: white
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        @*<div class="row uheader">
+                <div class="col-sm-3 p-2 fs-4">
+                    HRMS
+                </div>
+                <div class="col-sm-3 p-2">
+                    <i class="fa fa-envelope"></i>info@abc.com ||
+                    <i class="fa fa-envelope"></i>abc@gmail.com
+                </div>
+                <div class="col-sm-3 p-2">
+                    <i class="fa fa-phone"></i>+91-123456789 ||
+                    <i class="fa fa-phone"></i>+91-123456789
+                </div>
+                <div class="col-sm-3 p-2">
+                    <i class="fa-brands fa-facebook ic"></i>
+                    <i class="fa-brands fa-instagram ic"></i>
+                    <i class="fa-brands fa-youtube ic"></i>
+                    <i class="fa-brands fa-whatsapp ic"></i>
+                </div>
+            </div>*@
+        <div class="row m-2 p-2 text-center fs-3"><center>Welcome <b class="textcolor2">Admin</b></center></div>
+        <div class="row header bg-mycolor">
+            <div class="col-sm-12 p-0">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <div id="menu" class="mx-auto">
+                                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page" href="/Home/Dashboard"><i class="fa fa-home"></i> Admin Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/Home/AddEmployee">Add Employee</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/Home/EmployeeMngmt">List of Employee</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/Home/AssignTask">Assign Task</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/Home/ListTask">Task List</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/Home/AdminLeaveMngmt">Leave Management</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/Home/AddSalary">Generate Salary</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Setting
+                                        </a>
+                                        <ul class="dropdown-menu bg-mycolor">
+                                            <li><a class="dropdown-item" href="/Home/ChangePasswordAdmin">Change Password</a></li>
+                                            <li><a class="dropdown-item" href="/Home/Logout">Logout</a></li>
+                                            @*<li><hr class="dropdown-divider"></li>
+                                                <li><a class="dropdown-item" href="#">Something else here</a></li>*@
+                                        </ul>
+                                    </li>
+                                    @*<li class="nav-item">
+                                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                                        </li>*@
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        @RenderBody()
+    </div>
+    <div class="container-fluid">
+        <div class="row ufooter">
+            <div class="col-sm-12 text-light text-center">
+                <span class="footertext">Design and Developed by Mirza Ashad Baig and &copy; <a href="https://www.techpile.in/" target="_blank">Techpile Technology</a> </span>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/js/bootstrap.bundle.js"></script>
+    <script>
+        $(document).ready(function () {
+            // apply jQuery datatable to all tables whose id is mytable
+            $("#mytable").DataTable()
+        })
+    </script>
+</body>
+
+</html>
+

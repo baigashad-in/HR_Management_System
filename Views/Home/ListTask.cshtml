@@ -1,0 +1,57 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "ListTask";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ListTask</h2>
+
+
+<div class="container-fluid overflow-auto">
+    <div class="row d-grid justify-content-center">
+        <div class="col-sm-12 shadow-lg mt-5 p-4 rounded-4">
+            <p class="text-center fs-4 m-0"> All <b class="textcolor2">Task</b></p>
+            <table class="table table-striped" style="overflow-x:scroll;" id="mytable">
+                <thead>
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Employee ID</th>
+                        <th>Task Subject</th>
+                        <th>Task Description</th>
+                        <th>Task Priority</th>
+                        <th>Task Attachment</th>
+                        <th>Assinged On</th>
+                        <th>Task Due Date</th>
+                        <th>Task Added On</th>
+                        <th>Task Updated On</th>
+                        <th>Task Is Active</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int x = 1;
+                        foreach (System.Data.DataRow element in Model.Rows)
+                        {
+                            <tr>
+                                <td>@x</td>
+                                <td>@element["EmployeeId"]</td>
+                                <td>@element["TaskSubject"]</td>
+                                <td>@element["TaskDescription"]</td>
+                                <td>@element["TaskPriority"]</td>
+                                <td><a href="~/Content/TaskFiles/@element["TaskAttachment"]"> <i class="fa fa-download"></i> @element["TaskAttachment"]</a> </td>
+                                <td>@element["TaskAddedOn"]</td>
+                                <td>@element["TaskDueDate"]</td>
+                                <td>@element["TaskAddedOn"]</td>
+                                <td>@element["TaskUpdatedOn"]</td>
+                                <td>@element["TaskIsActive"]</td>
+                            </tr>
+                            x++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

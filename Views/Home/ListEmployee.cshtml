@@ -1,0 +1,73 @@
+﻿@model System.Data.DataTable
+
+@{
+    ViewBag.Title = "ListEmployee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ListEmployee</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <table class="table">
+                <thead class="table table-bordered table-danger table-hover table-responsive">
+                    <tr>
+                        <th>EmployeeName</th>
+                        <th>EmployeeGender</th>
+                        <th>EmployeeDOB</th>
+                        <th>EmployeeContactNumber</th>
+                        <th>EmployeePersonalEmail</th>
+                        <th>EmployeeOfficialEmail</th>
+                        <th>EmployeeAddress</th>
+                        <th>EmployeeAadharNumber</th>
+                        <th>EmployeeId</th>
+                        <th>EmployeeRole</th>
+                        <th>EmployeeDesignation</th>
+                        <th>EmployeeDOJ</th>
+                        <th>EmployeePAN</th>
+                        <th>EmployeeAccountNumber</th>
+                        <th>EmployeeBankName</th>
+                        <th>EmployeeIFSCcode</th>
+                        <th>EmployeeSalary</th>
+                        <th>EmployeeAddedOn</th>
+                        @*<th>EmployeeExitDate</th>*@
+                        <th>EmployeeStatus</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+                        foreach (System.Data.DataRow item in Model.Rows)
+                        {
+                                        <tr>
+                                            <td>@item["EmployeeName"]</td>
+                                            <td>@item["EmployeeGender"]</td>
+                                            <td>@item["EmployeeDOB"]</td>
+                                            <td>@item["EmployeeContactNumber"]</td>
+                                            <td>@item["EmployeePersonalEmail"]</td>
+                                            <td>@item["EmployeeOfficialEmail"]</td>
+                                            <td>@item["EmployeeAddress"]</td>
+                                            <td>@item["EmployeeAadharNumber"]</td>
+                                            <td>@item["EmployeeId"]</td>
+                                            <td>@item["EmployeeRole"]</td>
+                                            <td>@item["EmployeeDesignation"]</td>
+                                            <td>@item["EmployeeDOJ"]</td>
+                                            <td>@item["EmployeePAN"]</td>
+                                            <td>@item["EmployeeAccountNumber"]</td>
+                                            <td>@item["EmployeeBankName"]</td>
+                                            <td>@item["EmployeeIFSCcode"]</td>
+                                            <td>@item["EmployeeSalary"]</td>
+                                            <td>@item["EmployeeAddedOn"]</td>
+                                            @*<td>@item["EmployeeExitDate"]</td>*@
+                                            <td>@item["EmployeeStatus"]</td>
+                                        </tr>
+                        }
+
+                     }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

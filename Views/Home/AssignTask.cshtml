@@ -1,0 +1,121 @@
+﻿@*@model System.Data.DataSet*@
+@{
+    ViewBag.Title = "AssignTask";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<h2>AssignTask</h2>*@
+
+<div class="container my-4">
+    <div class="row d-grid justify-content-center">
+        <div class="col-sm-6 shadow-lg p-4 rounded-4">
+            <h3 class="text-center">Assign <b class="textcolor2">Task</b></h3>
+            <br />
+            <form method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-sm-6 form-floating">
+                        <select name="SelectEmployeeAttribute" class="form-control " id="SelectEmployeeId">
+                            <option disabled selected>-- Select Employee --</option>
+                            @{
+                                foreach (System.Data.DataRow item in ViewBag.Data.Tables[0].Rows)
+                                {
+                                    <option value="@item["EmployeeId"]">@item["EmployeeName"] (@item["EmployeeId"])</option>
+
+                                }
+                            }
+
+                        </select>
+                        <label for="SelectEmployeeId">Select Employee</label>
+
+                    </div>
+                    <br />
+                    <div class="col-sm-6 form-floating">
+                        <input type="text" name="TaskSubjectAttribute" class="form-control" id="TaskSubjectId" />
+                        <label for="TaskSubjectId" class="">Task Subject</label>
+
+                    </div>
+                </div>
+                <div class="form-floating my-3">
+                    <textarea name="TaskDescriptionAttribute" id="TaskDescriptionId" class="form-control" rows="3" cols="60"></textarea>
+                    <label for="TaskDescriptionId" class="">Task Description</label>
+
+                </div>
+                <div class="form-floating">
+                    <select name="SelectPriorityAttribute" class="form-control" id="TaskPriorityId">
+                        <option disabled selected>-- Select Task Priority -- </option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                        <option value="Urgent">Urgent</option>
+                    </select>
+                    <label for="TaskPriorityId" class="">Select Priority of Task</label>
+
+                </div>
+                    <div class=" my-3">
+                        <label for="DueDateId" class="fw-lighter">Task Due Date</label>
+                        <input type="date" name="DueDateAttribute" class="form-control" id="DueDateId" />
+                    </div>
+                    <div class=" my-3">
+                        <label for="AttachmentId" class="fw-lighter">Attachment (if any)</label>
+                        <input type="file" name="AttachmentAttribute" class="form-control" id="AttachmentId" />
+                    </div>
+                    <div class="form-floating">
+                        <input type="submit" class="btn mycolor1" value="Submit" />
+                        <input type="reset" class="btn btn-outline-secondary" value="Cancel" />
+                    </div>
+            </form>
+
+        </div>
+        <!-- Start list of today's assinged task -->
+        <div class="col-sm-12 shadow-lg mt-5 p-4 rounded-4">
+            <p class="text-center fs-4 m-0">Today's <b class="textcolor2">Task</b></p>
+            <table class="table table-striped" style="overflow-x:scroll;" id="mytable">
+                <thead>
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Employee Name</th>
+                        <th>Employee ID</th>
+                        <th>Employee Designation</th>
+                        <th>Task Subject</th>
+                        <th>Task Priority</th>
+                        <th>Task Attachment</th>
+                        <th>Assinged On</th>
+                        <th>Task Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        if (ViewBag.Data == null)
+                        {
+                            <p class="text-danger">ViewBag.Data is null!</p>
+                        }
+                        else
+                        {
+                            <p class="text-success">ViewBag.Data loaded successfully.</p>
+                            <p>Table count: @ViewBag.Data.Tables.Count</p>
+
+                            int x = 1;
+                            foreach (System.Data.DataRow element in ViewBag.Data.Tables[1].Rows)
+                            {
+                                <tr>
+                                    <td>@x</td>
+                                    <td>@element["EmployeeName"]</td>
+                                    <td>@element["EmployeeId"]</td>
+                                    <td>@element["EmployeeDesignation"]</td>
+                                    <td>@element["TaskSubject"]</td>
+                                    <td>@element["TaskPriority"]</td>
+                                    <td><a href="~/Content/TaskFiles/@element["TaskAttachment"]"><i class="fa fa-download"></i></a></td>
+                                    <td>@element["TaskAddedOn"]</td>
+                                    <td>@element["TaskDueDate"]</td>
+                                </tr>
+                                x++;
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,107 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "EmployeeMngmt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="m-4">Employee Mngmt</h2>
+
+
+<div class="container-fluid overflow-auto"> <!-- overflow-auto is used to make header footer constant during horzontal scrolling-->
+    <div class="row">
+        <div class="col-sm-6">
+            <table class="table" id="mytable">
+                <thead class="table table-bordered table-danger table-hover table-responsive">
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>EmployeeName</th>
+                        <th>EmployeeId</th>
+                        <th>EmployeeGender</th>
+                        <th>EmployeeDOB</th>
+                        <th>EmployeeContactNumber</th>
+                        <th>EmployeePersonalEmail</th>
+                        <th>EmployeeOfficialEmail</th>
+                        <th>EmployeeAddress</th>
+                        <th>EmployeeAadharNumber</th>
+                        <th>EmployeeRole</th>
+                        <th>EmployeeDesignation</th>
+                        <th>EmployeeDOJ</th>
+                        <th>EmployeePAN</th>
+                        <th>EmployeeAccountNumber</th>
+                        <th>EmployeeBankName</th>
+                        <th>EmployeeIFSCcode</th>
+                        <th>EmployeeSalary</th>
+                        <th>EmployeeAddedOn</th>
+                        @*<th>EmployeeExitDate</th>*@
+                        <th>EmployeeStatus</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @{
+                            int x = 1;
+                            foreach (System.Data.DataRow item in Model.Rows)
+                            {
+                                        <tr>
+                                            <td>@x</td>
+                                            <td>@item["EmployeeName"]</td>
+                                            <td class="td_EmployeeId">@item["EmployeeId"]</td>
+                                            <td>@item["EmployeeGender"]</td>
+                                            <td>@item["EmployeeDOB"]</td>
+                                            <td>@item["EmployeeContactNumber"]</td>
+                                            <td>@item["EmployeePersonalEmail"]</td>
+                                            <td>@item["EmployeeOfficialEmail"]</td>
+                                            <td>@item["EmployeeAddress"]</td>
+                                            <td>@item["EmployeeAadharNumber"]</td>
+                                            <td>@item["EmployeeRole"]</td>
+                                            <td>@item["EmployeeDesignation"]</td>
+                                            <td>@item["EmployeeDOJ"]</td>
+                                            <td>@item["EmployeePAN"]</td>
+                                            <td>@item["EmployeeAccountNumber"]</td>
+                                            <td>@item["EmployeeBankName"]</td>
+                                            <td>@item["EmployeeIFSCcode"]</td>
+                                            <td>@item["EmployeeSalary"]</td>
+                                            <td>@item["EmployeeAddedOn"]</td>
+                                            @*<td>@item["EmployeeExitDate"]</td>*@
+                                            <td>@item["EmployeeStatus"]</td>
+                                            @*<td><a class="btn btn-primary" href="/Home/GetEmployeeById?OldEmployeeId=@item["EmployeeId"]">Edit</a> | <a class="btn btn-danger" href="/Home/DeleteEmployeeById?OldEmployeeId=@item["EmployeeId"]">Delete</a></td>*@
+                                            <td><a class="btn btn-primary" href="/Home/GetEmployeeById?OldEmployeeId=@item["EmployeeId"]">Edit</a> | <a class="btn btn-danger btn_delete" onclick="return confirm('Do you really want to delete this resord?')">Delete</a></td>
+                                        </tr>
+                            x++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function()
+    {
+        //alert('Ok')
+        $(".btn_delete").click(function () {
+            var SelectedEmployeeId = $(this).parent().parent().find(".td_EmployeeId").text()
+            var obj = $(this).parent().parent()
+            $.ajax({
+                url: '/Home/DeleteEmployeeByIdJson',
+                type: 'GET',
+                data: { 'EmployeeIdToController': SelectedEmployeeId },
+                success: function (responseVariable)
+                {
+                    if (responseVariable > 0) {
+                        obj.hide()
+                        alert('Record Deleted Succesfully.')
+                    }
+                    else {
+                        alert('Record not Deleted')
+                    }
+                },
+                error: function ()
+                {
+                    alert('Error on Server. Try Again')
+                }
+            })
+        })
+    })
+</script>

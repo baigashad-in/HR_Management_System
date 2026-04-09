@@ -1,0 +1,80 @@
+﻿@model System.Data.DataRow
+@{
+    ViewBag.Title = "GetLeaveById";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetLeaveById</h2>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-sm-10 mx-auto">
+
+            <form method="post">
+                <div class="row py-3 ">
+                    <div class="col-sm-4 mx-auto">
+                        <div class="card shadow-lg border border-0">
+                            <p class="text-center fs-4 m-0">Apply for <b class="text-danger">a Leave</b></p>
+                            <div class="form-floating m-3">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="LeaveSubjectAttribute" readonly>
+                                <label for="floatingInput">Enter Subject of Leave</label>
+                            </div>
+                            <div class="form-floating mx-3">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="LeaveDescriptionAttribute" readonly></textarea>
+                                <label for="floatingTextarea">Enter Description</label>
+                            </div>
+                            <div class="form-floating m-3">
+                                <input type="date" class="form-control" id="FromDateId" placeholder="name@example.com" name="FromDateAttribute">
+                                <label for="FromDateId">Select From Date</label>
+                            </div>
+                            <div class="form-floating mb-3 mx-3">
+                                <input type="date" class="form-control" id="ToDateId" placeholder="Password" name="ToDateAtribute">
+                                <label for="ToDateId">
+                                    Select To Date
+                                </label>
+                            </div>
+                            <div class="form-floating mb-3 m-3">
+                                <input type="number" class="form-control" id="TotalDaysId" name="TotalDaysAttribute">
+                                <label for="TotalDaysId">
+                                    Total Days
+                                </label>
+                            </div>
+
+                            <div class="form-floating m-3">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="StatusViaAdminAttribute" >
+                                <label for="floatingInput">Status_via_Admin</label>
+                            </div>
+                            <div class="form-floating mx-3">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="StatusCommentAttribute"></textarea>
+                                <label for="floatingTextarea">Status_Comment</label>
+                            </div>
+                            <button class="btn bg-mycolor mx-3 mb-3" type="submit">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#ToDateId").change(function () {
+            var fromdate = new Date($("#FromDateId").val())
+            var todate = new Date($("#ToDateId").val())
+            if (fromdate != null && (todate > fromdate)) {
+                var millisec = (todate - fromdate)
+                var days = (millisec / (1000 * 60 * 60 * 24)) + 1
+                $("#TotalDaysId").val(days)
+            }
+            else
+            {
+                alert("Either From Date is not selected or From Date is larger than To Date. Kindly Fix it.")
+            }
+
+        })
+    })
+
+</script>
+

@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = null;
+}
+
+<html>
+<head>
+    <link href="~/Content/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/all.min.css" rel="stylesheet" />
+    <script src="~/Content/js/bootstrap.bundle.js"></script>
+
+    <style>
+        .login {
+            margin: 100px 0px;
+            border-radius: 20px;
+            background: white;
+        }
+        .textcolor1 {
+            color: #6610f2;
+        }
+        .textcolor2 {
+            color: #6f42c1;
+        }
+        .mycolor1 {
+            background: #6f42c1;
+            color:white
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <a href="/Employee/Login" class="btn mycolor1">Are You an Employee? Click Here</a>
+        <div class="row" style="min-height:500px;">
+            <div class="col-sm-3 shadow-lg mx-auto login p-0">
+                <div class="h3 text-light text-center bg-secondary rounded-top-4 p-1">Admin Login</div>
+                <form method="post">
+                    <div>
+                        <div class="input-group mt-5 px-5 flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping"><i class="fa fa-circle-user"></i></span>
+                            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping" name="AdminUserNameAttribute">
+                        </div>
+                        <div class="input-group my-4 px-5 flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping"><i class="fa fa-lock"></i></span>
+                            <input type="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="addon-wrapping" name="AdminPasswordAttribute">
+                        </div>
+                        <div class="text-end px-5">
+                            <a href="#" >Forgot Password?</a>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+
+                    <div class="px-5"> <button type="submit" class="btn mycolor1 w-100">Login Now</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
