@@ -39,3 +39,6 @@ Web.config   # Only if it contains passwords or connection strings
 # Roslyn / compiler tools
 # ======================
 /bin/roslyn/
+
+# Visual Studio IDE folder
+.vs/
