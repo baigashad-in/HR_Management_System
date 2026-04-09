@@ -1,0 +1,41 @@
+# ======================
+# Build / Compiled files
+# ======================
+/bin/
+/obj/
+/App_Data/*.mdf
+/App_Data/*.ldf
+
+# ======================
+# User-specific files
+# ======================
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ======================
+# NuGet packages (can restore)
+# ======================
+/packages/
+
+# ======================
+# Environment and secrets
+# ======================
+.env
+appsettings.Development.json
+appsettings.Local.json
+Web.config   # Only if it contains passwords or connection strings
+
+# ======================
+# Temporary / cache files
+# ======================
+*.log
+*.tmp
+*.cache
+*.DS_Store
+
+# ======================
+# Roslyn / compiler tools
+# ======================
+/bin/roslyn/
