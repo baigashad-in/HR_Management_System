@@ -3,6 +3,7 @@
 # ======================
 /bin/
 /obj/
+[Bb]uild/
 /App_Data/*.mdf
 /App_Data/*.ldf
 
@@ -18,6 +19,8 @@
 # NuGet packages (can restore)
 # ======================
 /packages/
+*.nupkg
+project.lock.json
 
 # ======================
 # Environment and secrets
@@ -25,7 +28,6 @@
 .env
 appsettings.Development.json
 appsettings.Local.json
-Web.config   # Only if it contains passwords or connection strings
 
 # ======================
 # Temporary / cache files
@@ -40,5 +42,40 @@ Web.config   # Only if it contains passwords or connection strings
 # ======================
 /bin/roslyn/
 
-# Visual Studio IDE folder
-.vs/Web.config
+# ======================
+# VISUAL STUDIO 
+# ======================
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.csproj.user
+
+# ======================
+# SENSITIVE FILES
+# ======================
+Web.config
+Web.Debug.config
+Web.Release.config
+
+# ======================
+# UPLOADED FILES
+# ======================
+Content/TaskFiles/*
+Content/Documents/*
+!Content/TaskFiles/.gitkeep
+!Content/Documents/.gitkeep
+
+# ======================
+# OS FILES
+# ======================
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# ======================
+# RESHARPER / RIDER
+# ======================
+_ReSharper*/
+*.DotSettings.user
