@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Management; // AD.NET class
 using System.Web.Mvc;
 using System.Web.Security;
+using BCrypt.Net;
 
 namespace MajorProject_HRMS_APP25.Controllers
 {
@@ -26,23 +27,26 @@ namespace MajorProject_HRMS_APP25.Controllers
             return View();
         }
         [AllowAnonymous, HttpPost] // Admin Login
+        [ValidateAntiForgeryToken]
         public ActionResult Index(string AdminUserNameAttribute, string AdminPasswordAttribute)
         {
             SqlParameter[] parametersToInsert = new SqlParameter[]
            {
-                new SqlParameter("@EmployeeId", AdminUserNameAttribute),
-                new SqlParameter("@EmployeePassword", AdminPasswordAttribute)
+                new SqlParameter("@EmployeeId", AdminUserNameAttribute)
            };
-            DataTable dt = dbLayerObj.ExecuteSelect("SP_AdminLogin", parametersToInsert);
+            DataTable dt = dbLayerObj.ExecuteSelect("SP_GetAdminPasswordHash", parametersToInsert);
             if (dt.Rows.Count > 0)
             {
-                FormsAuthentication.SetAuthCookie(AdminUserNameAttribute, false);
-                return RedirectToAction("Dashboard");
+                string storedHash = dt.Rows[0]["EmployeePassword"].ToString();
+                if (PasswordHelper.VerifyPassword(AdminPasswordAttribute, storedHash))
+                {
+                    FormsAuthentication.SetAuthCookie(AdminUserNameAttribute, false);
+                    return RedirectToAction("Dashboard");
+                }
+                
             }
-            else
-            {
-                return Content("<script>alert('Incorrect UserId or Password');location.href='/Home/Index'</script>");
-            }
+            TempData["Error"] = "Incorrect UserId or Password";
+            return RedirectToAction("Index");
             
         }
         #endregion
@@ -62,10 +66,12 @@ namespace MajorProject_HRMS_APP25.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddEmployee(EmployeeDataClass EmployeeObj)
         {
             Random rnd = new Random();
             int password = rnd.Next(10000, 99999);
+            string hashedPassword = PasswordHelper.HashPassword(password.ToString());
             try
             {
                 SqlParameter[] parametersToInsert = new SqlParameter[]
@@ -89,7 +95,7 @@ namespace MajorProject_HRMS_APP25.Controllers
                     new SqlParameter("@EmployeeBankName", EmployeeObj.EmployeeBankNameAttribute),
                     new SqlParameter("@EmployeeIFSCcode", EmployeeObj.EmployeeIFSCcodeAttribute),
                     new SqlParameter("@EmployeeSalary", EmployeeObj.EmployeeSalaryAttribute),
-                    new SqlParameter("@EmployeePassword", password),
+                    new SqlParameter("@EmployeePassword", hashedPassword),
                     new SqlParameter("@Action",1)
 
                 };
@@ -195,6 +201,7 @@ namespace MajorProject_HRMS_APP25.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult GetEmployeeById(string OldEmployeeId, EmployeeDataClass EmployeeObj)
         {
             try
@@ -266,6 +273,9 @@ namespace MajorProject_HRMS_APP25.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult DeleteEmployeeByIdJson(string EmployeeIdToController)
         {
             //try
@@ -318,6 +328,7 @@ namespace MajorProject_HRMS_APP25.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AssignTask(TaskDataClass TaskDataObj)
         {
             // Select All Employees list
@@ -335,16 +346,38 @@ namespace MajorProject_HRMS_APP25.Controllers
 
             string savedFileName = null;
             if (TaskDataObj.AttachmentAttribute != null && TaskDataObj.AttachmentAttribute.ContentLength > 0)
-            {
-                string fileName = Path.GetFileName(TaskDataObj.AttachmentAttribute.FileName);
+            {           
+                string originalFileName = Path.GetFileName(TaskDataObj.AttachmentAttribute.FileName);
+                string extension = Path.GetExtension(originalFileName).ToLower();
+
+                // Whitelist allowed extensions
+                string[] allowedExtensions = { ".pdf", ".docx", ".xls", ".xlsx", ".png", ".jpg", ".jpeg" };
+                if (!allowedExtensions.Contains(extension))
+                {
+                    return Content("<script>alert('File type not allowed');location.href='/Home/AssignTask'</script>\");
+                }
+                
+
+                // Limit file size to 5MB
+                if (TaskDataObj.AttachmentAttribute.ContentLength > 5 * 1024 * 1024)
+                {
+                    return Content("<script>alert('File too large. Max 5MB.');location.href='/Home/AssignTask'</script>");
+                }
+
+                // Rename GUID to prevent overwriting and path traversal
+                string safeFileName = Guid.NewGuid().ToString() + extension;
                 string folderPath = Server.MapPath("~/Content/TaskFiles/");
-                string filePath = Path.Combine(folderPath, fileName);
+                
+
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
                 }
+
+                string filePath = Path.Combine(folderPath, safeFileName);
+
                 TaskDataObj.AttachmentAttribute.SaveAs(filePath);
-                savedFileName = fileName;
+                savedFileName = safeFileName;
             }
 
             SqlParameter[] parametersToInsert = new SqlParameter[]
@@ -385,6 +418,7 @@ namespace MajorProject_HRMS_APP25.Controllers
         }
 
         //[HttpPost]
+        //[ValidateAntiForgeryToken]
         //public ActionResult AdminLeaveMngmt(string AdminCommentAttribute, string StatusViaAdminAttribute, string EmployeeIdToController)
         //{
         //    SqlParameter[] parametersToInsert = new SqlParameter[]
@@ -397,6 +431,7 @@ namespace MajorProject_HRMS_APP25.Controllers
         //}
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AcceptLeave(string AdminCommentToController, string StatusViaAdminToController, string SrToController)
         {
             SqlParameter[] parametersToInsert = new SqlParameter[]
@@ -422,6 +457,7 @@ namespace MajorProject_HRMS_APP25.Controllers
 
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult RejectLeave(string AdminCommentToController, string SrToController)
         {
             SqlParameter[] parametersToInsert = new SqlParameter[]
@@ -468,6 +504,7 @@ namespace MajorProject_HRMS_APP25.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult GetLeaveById()
         {
             DataTable dt = dbLayerObj.ExecuteSelect("SP_SelectAllLeave");
@@ -484,6 +521,7 @@ namespace MajorProject_HRMS_APP25.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ChangePasswordAdmin(AdminChangePasswordClass AdminChangePasswordObj)
         {
             SqlParameter[] parametersToInsert = new SqlParameter[]

@@ -8,6 +8,7 @@
 
 
 <div class="container-fluid overflow-auto"> <!-- overflow-auto is used to make header footer constant during horzontal scrolling-->
+    @Html.AntiForgeryToken()
     <div class="row">
         <div class="col-sm-6">
             <table class="table" id="mytable">
@@ -40,34 +41,34 @@
                 <tbody>
 
                     @{
-                            int x = 1;
-                            foreach (System.Data.DataRow item in Model.Rows)
-                            {
-                                        <tr>
-                                            <td>@x</td>
-                                            <td>@item["EmployeeName"]</td>
-                                            <td class="td_EmployeeId">@item["EmployeeId"]</td>
-                                            <td>@item["EmployeeGender"]</td>
-                                            <td>@item["EmployeeDOB"]</td>
-                                            <td>@item["EmployeeContactNumber"]</td>
-                                            <td>@item["EmployeePersonalEmail"]</td>
-                                            <td>@item["EmployeeOfficialEmail"]</td>
-                                            <td>@item["EmployeeAddress"]</td>
-                                            <td>@item["EmployeeAadharNumber"]</td>
-                                            <td>@item["EmployeeRole"]</td>
-                                            <td>@item["EmployeeDesignation"]</td>
-                                            <td>@item["EmployeeDOJ"]</td>
-                                            <td>@item["EmployeePAN"]</td>
-                                            <td>@item["EmployeeAccountNumber"]</td>
-                                            <td>@item["EmployeeBankName"]</td>
-                                            <td>@item["EmployeeIFSCcode"]</td>
-                                            <td>@item["EmployeeSalary"]</td>
-                                            <td>@item["EmployeeAddedOn"]</td>
-                                            @*<td>@item["EmployeeExitDate"]</td>*@
-                                            <td>@item["EmployeeStatus"]</td>
-                                            @*<td><a class="btn btn-primary" href="/Home/GetEmployeeById?OldEmployeeId=@item["EmployeeId"]">Edit</a> | <a class="btn btn-danger" href="/Home/DeleteEmployeeById?OldEmployeeId=@item["EmployeeId"]">Delete</a></td>*@
-                                            <td><a class="btn btn-primary" href="/Home/GetEmployeeById?OldEmployeeId=@item["EmployeeId"]">Edit</a> | <a class="btn btn-danger btn_delete" onclick="return confirm('Do you really want to delete this resord?')">Delete</a></td>
-                                        </tr>
+                        int x = 1;
+                        foreach (System.Data.DataRow item in Model.Rows)
+                        {
+                            <tr>
+                                <td>@x</td>
+                                <td>@item["EmployeeName"]</td>
+                                <td class="td_EmployeeId">@item["EmployeeId"]</td>
+                                <td>@item["EmployeeGender"]</td>
+                                <td>@item["EmployeeDOB"]</td>
+                                <td>@item["EmployeeContactNumber"]</td>
+                                <td>@item["EmployeePersonalEmail"]</td>
+                                <td>@item["EmployeeOfficialEmail"]</td>
+                                <td>@item["EmployeeAddress"]</td>
+                                <td>@item["EmployeeAadharNumber"]</td>
+                                <td>@item["EmployeeRole"]</td>
+                                <td>@item["EmployeeDesignation"]</td>
+                                <td>@item["EmployeeDOJ"]</td>
+                                <td>@item["EmployeePAN"]</td>
+                                <td>@item["EmployeeAccountNumber"]</td>
+                                <td>@item["EmployeeBankName"]</td>
+                                <td>@item["EmployeeIFSCcode"]</td>
+                                <td>@item["EmployeeSalary"]</td>
+                                <td>@item["EmployeeAddedOn"]</td>
+                                @*<td>@item["EmployeeExitDate"]</td>*@
+                                <td>@item["EmployeeStatus"]</td>
+                                @*<td><a class="btn btn-primary" href="/Home/GetEmployeeById?OldEmployeeId=@item["EmployeeId"]">Edit</a> | <a class="btn btn-danger" href="/Home/DeleteEmployeeById?OldEmployeeId=@item["EmployeeId"]">Delete</a></td>*@
+                                <td><a class="btn btn-primary" href="/Home/GetEmployeeById?OldEmployeeId=@item["EmployeeId"]">Edit</a> | <a class="btn btn-danger btn_delete" onclick="return confirm('Do you really want to delete this resord?')">Delete</a></td>
+                            </tr>
                             x++;
                         }
                     }
@@ -83,10 +84,14 @@
         $(".btn_delete").click(function () {
             var SelectedEmployeeId = $(this).parent().parent().find(".td_EmployeeId").text()
             var obj = $(this).parent().parent()
+            var token = $('input[name="__RequestVerificationToken"]').val();
             $.ajax({
                 url: '/Home/DeleteEmployeeByIdJson',
-                type: 'GET',
-                data: { 'EmployeeIdToController': SelectedEmployeeId },
+                type: 'POST',
+                data: {
+                    __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                    'EmployeeIdToController': SelectedEmployeeId
+                },
                 success: function (responseVariable)
                 {
                     if (responseVariable > 0) {

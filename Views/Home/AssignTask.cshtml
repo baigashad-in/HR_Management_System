@@ -12,6 +12,7 @@
             <h3 class="text-center">Assign <b class="textcolor2">Task</b></h3>
             <br />
             <form method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
                 <div class="row">
                     <div class="col-sm-6 form-floating">
                         <select name="SelectEmployeeAttribute" class="form-control " id="SelectEmployeeId">

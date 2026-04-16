@@ -26,23 +26,25 @@ namespace MajorProject_HRMS_APP25.Controllers
             return View();
         }
         [AllowAnonymous, HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(string EmployeeUserNameAttribute, string EmployeePasswordAttribute)
         {
             SqlParameter[] parametersToInsert = new SqlParameter[]
             {
-                new SqlParameter("@EmployeeId", EmployeeUserNameAttribute),
-                new SqlParameter("@EmployeePassword", EmployeePasswordAttribute)
+                new SqlParameter("@EmployeeId", EmployeeUserNameAttribute)
             };
-            DataTable dt = dBLayerObj.ExecuteSelect("SP_EmployeeLogin", parametersToInsert);
+            DataTable dt = dBLayerObj.ExecuteSelect("SP_GetEmployeePasswordHash", parametersToInsert);
             if (dt.Rows.Count > 0)
             {
-                FormsAuthentication.SetAuthCookie(EmployeeUserNameAttribute, false);
-                return RedirectToAction("Dashboard");
+                string storedHash = dt.Rows[0]["EmployeePassword"].ToString();
+                if (PasswordHelper.VerifyPassword(EmployeePasswordAttribute, storedHash))
+                {
+                    FormsAuthentication.SetAuthCookie(EmployeeUserNameAttribute, false);
+                    return RedirectToAction("Dashboard");
+                }
             }
-            else
-            {
-                return Content("<script>alert('Incorrect UserId or Password');location.href='/Employee/Login'</script>");
-            }
+            TempData["Error"] = "Incorrect UserId or Password";
+            return RedirectToAction("Login");
         }
 
         [AllowAnonymous]
@@ -51,6 +53,7 @@ namespace MajorProject_HRMS_APP25.Controllers
             return View();
         }
         [AllowAnonymous, HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ForgotPassword(string EmployeeIdVerifyAttribute)
         {
             Random rnd = new Random();
@@ -103,6 +106,7 @@ namespace MajorProject_HRMS_APP25.Controllers
         }
 
         [AllowAnonymous, HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult VerifyOTP(string VerifyOtpAttribute)
         {
             string SentOTP = Session["OTP"].ToString();
@@ -125,6 +129,7 @@ namespace MajorProject_HRMS_APP25.Controllers
         }
 
         [AllowAnonymous, HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ChangeForgotPasswordEmployee(string ConfirmForgotPasswordAttribute, string VerifyOtpAttribute)
         {
             string SentOTP = Session["OTP"].ToString();
@@ -156,6 +161,7 @@ namespace MajorProject_HRMS_APP25.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ApplyForLeave(LeaveDataClass LeaveDataObj)
         {
             SqlParameter[] parametersToInsert = new SqlParameter[]

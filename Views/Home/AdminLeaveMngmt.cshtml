@@ -7,6 +7,7 @@
 <h2>Admin Leave Management</h2>
 
 <div class="container-fluid overflow-auto">
+    @Html.AntiForgeryToken()
     <p class="text-center fs-3 mt-3">Leave <b class="textcolor2">Applications</b> </p>
     <hr class="w-25 mx-auto" />
 
@@ -77,7 +78,7 @@
                                                     @*<td>@item["Status_via_Admin"]</td>
                                                         <td>@item["Status_Comment"]</td>*@
                                                     <td>@item["Leave_Status"]</td>
-                                                    <td><a class="btn btn-warning openAcceptModal" data-Sr="@item["Sr"]" data-bs-toggle="modal" data-bs-target="#AcceptModal" > Accept </a> | <a class="btn btn-danger openRejectModal" data-Sr="@item["Sr"]" data-bs-toggle="modal" data-bs-target="#RejectModal"> Reject </a></td>
+                                                    <td><a class="btn btn-warning openAcceptModal" data-Sr="@item["Sr"]" data-bs-toggle="modal" data-bs-target="#AcceptModal"> Accept </a> | <a class="btn btn-danger openRejectModal" data-Sr="@item["Sr"]" data-bs-toggle="modal" data-bs-target="#RejectModal"> Reject </a></td>
                                                 </tr>
                                             }
                                         }
@@ -86,7 +87,7 @@
                             </table>
                             <!-- Start Accept Modal-->
                             <!-- Modal -->
-                            <div class="modal fade" id="AcceptModal" tabindex="-1" aria-labelledby="AcceptModalLabel" >
+                            <div class="modal fade" id="AcceptModal" tabindex="-1" aria-labelledby="AcceptModalLabel">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <form id="AcceptLeaveForm" method="post">
@@ -94,7 +95,7 @@
                                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Accept Leave</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            
+
                                             <div class="modal-body">
                                                 <input readonly type="text" id="AcceptFormSrId" class="form-control" />
                                                 <br />
@@ -115,7 +116,7 @@
                             </div>
                             <!-- End Accept Modal-->
                             <!-- Start Reject Modal-->
-                            <div class="modal fade" id="RejectModal" tabindex="-1" aria-labelledby="RejectModalLabel" >
+                            <div class="modal fade" id="RejectModal" tabindex="-1" aria-labelledby="RejectModalLabel">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <form method="post">
@@ -289,12 +290,14 @@
             var SelectedSr = AcceptSr
             var AdminCommentVariable = $("#AcceptAdminCommentId").val()
             var StatusViaAdminVariable = $("input[name='StatusViaAdminAttribute']:checked").val()
+            var token = $('input[name="__RequestVerificationToken"]').val();
 
             var hiddingRecordVariable = $(this).parent().parent()
             $.ajax({
                 url: '/Home/AcceptLeave',
                 type: 'POST',
                 data: {
+                    __RequestVerificationToken: token,
                     AdminCommentToController: AdminCommentVariable,
                     StatusViaAdminToController: StatusViaAdminVariable,
                     SrToController: SelectedSr
@@ -347,12 +350,13 @@
             //var SelectedSr = $("#RejectFormSrId").val()
             var SelectedSr = RejectSr
             var adminComment = $("#RejectAdminCommentId").val();
-
+            var token = $('input[name="__RequestVerificationToken"]').val();
             var hiddingRecordVariable = $(this).parent().parent()
             $.ajax({
                 url: '/Home/RejectLeave',
                 type: 'POST',
                 data: {
+                    __RequestVerificationToken: token,
                     SrToController: SelectedSr,
                     AdminCommentToController: adminComment },
                 success: function (responseVaribale)
