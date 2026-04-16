@@ -41,4 +41,4 @@ Web.config   # Only if it contains passwords or connection strings
 /bin/roslyn/
 
 # Visual Studio IDE folder
-.vs/
+.vs/Web.config
